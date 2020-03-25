@@ -1,0 +1,17 @@
+<aura:component >
+	<aura:registerevent name="addItem" type="c:addItemEvent"/>
+    <form>
+      
+        <lightning:input aura:id="campingl_list" label="name" value="{!v.newItem.Name}"/>
+        <lightning:input type="number" aura:id="campingl_list" label="Quantity" min="1" value="{!v.newItem.Quantity__c}"/>
+        <lightning:input type="number" formatter="currency" aura:id="campingl_list" label="Price" min="0.1" value="{!v.newItem.Price__c}"/>
+        <lightning:input type="checkbox" aura:id="campingl_list" label="packed" checked="{!v.newItem.Packed__c}"/>
+        <lightning:button label="Submit" onclick="{!c.clickCreateItem }"/>
+        <aura:iteration items="{!v.items}" var="items">
+                    <c:campinglistitem item="{!items}"/>
+
+                </aura:iteration>
+
+    </form>
+
+</aura:component>

@@ -1,0 +1,5 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" >
+    <aura:method name="parentMethod"/>
+    <lightning:button label="click Me" onclick="{!c.click}"/>
+    <c:childTest parent="{!this }" aura:id="child" />
+</aura:component>

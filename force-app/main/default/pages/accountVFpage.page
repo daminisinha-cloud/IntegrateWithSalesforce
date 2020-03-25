@@ -1,0 +1,21 @@
+<apex:page standardController="Account"  tabstyle="Account"   extensions="Accountdetails">
+    <apex:image url="{!URLFOR($Resource.account_pic )}"/>
+    <apex:outputText style="font-size:25px;" value="{!Account.name}">
+    </apex:outputText>
+    <apex:pageblock title="Account summary">
+        <apex:form >
+            <apex:pageBlockSection >
+                <apex:outputField value="{!Account.name}"/>
+                <apex:outputField value="{!Account.phone}"/>
+                <apex:inputcheckbox label="detail"   value="{!bool}">
+                    <apex:actionSupport event="onchange" reRender="show"/>
+                </apex:inputcheckbox> 
+            </apex:pageBlockSection>	
+            <apex:outputPanel id="show">
+                <apex:outputpanel rendered="{!bool}" >
+                    <apex:detail />
+                </apex:outputpanel>
+                </apex:outputPanel>
+            </apex:form>
+    </apex:pageblock>
+</apex:page>

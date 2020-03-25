@@ -1,0 +1,15 @@
+<apex:page standardController="Account" recordSetVar="Accounts">
+    <apex:pageBlock title="Related Contacts">
+        <apex:pageBlockTable value="{!selected}" var="item">
+            <apex:repeat value="{!item}" var="acc">
+                <apex:column value="{!acc.name}"/>
+                <apex:repeat value="{!acc.Contacts}" var="con">
+                    <apex:column value="{!con.LastName}"/>
+                </apex:repeat>
+            </apex:repeat>
+            
+        </apex:pageBlockTable>
+        
+    </apex:pageBlock>
+    
+</apex:page>

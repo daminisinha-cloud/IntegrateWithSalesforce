@@ -1,0 +1,6 @@
+<aura:component controller="resumeBuilder" >
+    <c:parentcmp/>
+    <aura:attribute name="objname" type="sobject"/>  
+    <aura:registerEvent name="appEvent" type="c:accountAppEvent"/>
+    <aura:handler name="Event1" event="c:lookUpevent" action="{!c.handleEvent}"/><br/> 
+</aura:component>

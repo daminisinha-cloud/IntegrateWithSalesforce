@@ -1,0 +1,95 @@
+<aura:component  controller = "accountApex">
+    <aura:attribute name="recordlist" type="list"/>
+    <aura:attribute name="completerecordlist" type="list"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="mycolumns" type="list"/>
+    <aura:attribute name="fields" type="String[]"  default="['Name', 'Phone' ,'Email']"/>
+    <aura:attribute name="object" type="sObject"/>
+    <aura:attribute name="bool" type="boolean" default="false"/>
+    <aura:attribute name="pagenumber" type="Integer" default="10"/>
+    <aura:attribute name="boolToNew" type="boolean" default="false"/>
+    <aura:attribute name="Nextdisable" type="Boolean" default="true" />
+    <aura:attribute name="previousdisable" type="Boolean" default="true" />
+     <aura:attribute name="createcontact" type="Boolean" default="true" />
+    <aura:attribute name="index" type="sobject"/>
+    
+    <aura:handler  event="c:accountAppEvent" action="{!c.handleEvent}"/>
+    
+    <aura:if isTrue="{!v.recordId}">
+     <div class="slds-align_absolute-center">
+        <input type="file" class="file" aura:id="file" />
+        <ui:button label="Upload Contacts" press="{!c.upload_csv}" disabled="{!v.createcontact}"/>
+         <lightning:button variant="brand" label="Create new contact" title="Create new contact" onclick="{!c.CreateContact}" disabled="{!v.createcontact}"/><br/>
+    </div>
+     </aura:if> 
+    
+    
+    <lightning:datatable
+                         data="{!v.recordlist}"
+                         columns="{!v.mycolumns}"
+                         keyField="id"
+                         hideCheckboxColumn="true"
+                         onrowaction="{! c.buttonclicked }"
+                     
+                         /><br/>
+    <span class="slds-align_absolute-center">
+    
+    <lightning:button variant="brand" label="Previous" class="slds-m-right_medium" title="Create new contact" onclick="{!c.PreviousList}"  disabled="{!v.previousdisable}"/><br/>
+  
+       
+    <lightning:button variant="brand" label="Next" title="Create new contact" onclick="{!c.NextList}" disabled="{!v.Nextdisable}"/><br/>
+   
+        </span>
+    <aura:if isTrue="{!v.bool}">
+        
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-backdrop">
+            <div class="slds-modal__container">
+                
+                <header class="slds-modal__header">
+                    Edit contact
+                </header>
+                
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">  
+                    <lightning:recordForm aura:id="edit contact"
+                                          recordId = "{!v.recordId}"	
+                                          objectApiName="Contact"
+                                          oncancel ="{!c.cancelrecord}"
+                                          fields="{!v.fields}"
+                                          mode="edit" 
+                                          onsuccess="{!c.EditContactsuccess}"
+                                          onsubmit="{!c.EditContactsubmit}"
+                                          
+                                          />
+                </div>
+                
+            </div>
+        </section>
+        
+    </aura:if>
+    <aura:if isTrue ="{!v.boolToNew}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-backdrop">
+            <div class="slds-modal__container">
+                
+                <header class="slds-modal__header">
+                    Create new contact
+                </header>
+                
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:recordForm
+                                          aura:id="newcontact"                  
+                                          objectApiName="Contact"
+                                          fields="{!v.fields}"
+                                          oncancel="{!c.cancelCreate}"
+                                          onsuccess="{!c.createsuccess}"
+                                          onsubmit="{!c.submitcontact}"
+                                          />
+                    
+                </div>
+                
+            </div>
+        </section>
+        
+        
+    </aura:if>
+      
+</aura:component>

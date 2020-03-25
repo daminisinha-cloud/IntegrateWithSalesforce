@@ -1,0 +1,174 @@
+<aura:component controller="rewardapex" >
+    <aura:attribute name="completerewardlists" type="sObject"/>
+    <aura:attribute name="paymentlist" type="sObject"/>
+    <aura:attribute name="renewlist" type="sObject"/>
+    <aura:attribute name="surveylist" type="sObject"/>
+    <aura:attribute name="pagenumber" type="Integer" default='0'/>
+    <aura:attribute name="Nextdisable" type="boolean" default="true"/>
+    <aura:attribute name="previousdisable" type="boolean" default="true"/>
+    <aura:attribute name="displayrewardlist" type="list"/>
+    <aura:attribute name="newrewardbool" type="boolean" default="false"/>
+    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="tab" type="String"/>
+    <aura:attribute name="fields" type="sObject" />
+    <aura:attribute name="arrowDirection" type="String" default="arrowup"/>
+    <aura:attribute name="isAsc" type="boolean" default="true"/>
+      <aura:attribute name="Id" type="String" />
+    
+    <aura:method name="displayrecords" action="{!c.display}" access="PUBLIC">
+        <aura:attribute name="completerewardlist" type="sObject"/>
+        <aura:attribute name="field" type="List"/>
+        <aura:attribute name="tabs" type="String"/>
+        <aura:attribute name="tabs" type="String"/>
+    </aura:method>
+    
+     <aura:registerEvent name="oSelectedRecordEvent" type="c:selectedsObjectRecordEvent"/>
+    <aura:handler name="oSelectedRecordEvent" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEvent}"/>
+    <aura:attribute name="newReward" type="Reward__c"
+                    default="{ 'sobjectType': 'Reward__c',
+                             'Name': '',
+                             'Account__c':'',
+                             'RecordTypeId':'',
+                             'Move_In_Date__c': '',
+                             'Start_Date__c': '',
+                             'Total__c': '', 
+                             'Payment_Date__c':''
+                             }"/>
+    
+    
+    
+    
+    
+    <lightning:button  label="Add"   variant="brand" onclick="{!c.Addreward }"  >
+        <lightning:icon iconName="utility:add" size="xx-small"/> Add Reward
+    </lightning:button>
+    <div class="slds-float_right">
+        <lightning:button  label="Approve All"   variant="brand" onclick="{! c.Approveall }"  />
+        <lightning:button  label="Reject All"   variant="brand" onclick="{! c.rejectall }"  />
+        
+        <lightning:button  label="Save"   variant="brand" onclick="{! c.Save }" />
+    </div>   
+    
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+        <thead>
+            <tr aura:id="table" class="slds-line-height_reset slds-text-title--caps">
+                <aura:iteration items="{!v.fields}" var="field" indexVar="index">
+                    <th  class="slds-is-sortable slds-text-title--caps" scope="col" onclick="{!c.sortfunction}" >
+                        <span  data-index="{!index}"> {!field}
+                            <aura:if isTrue="{!v.arrowDirection == 'arrowdown'}">&nbsp;  &#9660; </aura:if>  
+                            <aura:if isTrue="{!v.arrowDirection != 'arrowdown'}"> &nbsp;  &#9650; </aura:if> 
+                        </span>
+                    </th>
+                </aura:iteration>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <aura:iteration  items="{!v.displayrewardlist}" var="item" indexVar="index">
+                <tr>
+                    <td data-index="{!index}">{!item.Name}</td>
+                    <td data-index="{!index}">{!item.Account__r.Name}</td>
+                    <td data-index="{!index}">{!item.Move_In_Date__c}</td>
+                    <td data-index="{!index}">{!item.Start_Date__c}</td>
+                    <td data-index="{!index}">{!item.Total__c}</td>
+                    <aura:if isTrue="{!v.tab=='all'}">
+                        <td data-index="{!index}">{!item.RecordType.Name}</td>
+                    </aura:if>
+                    <aura:if isTrue="{!v.tab=='Payment'}">
+                        <td data-index="{!index}">{!item.Payment_Date__c}</td>
+                    </aura:if>
+                    <aura:if isTrue="{!v.tab=='Survey'}">
+                        <td data-index="{!index}">{!item.Survey_Completed_Date__c}</td>
+                        <td data-index="{!index}" role="gridcell">
+                            
+                            <div data-index="{!index}" class="slds-truncate" title="Approve" >
+                                <ui:inputCheckbox  aura:id="checkapproved" value="{!item.Survey_Completed__c}" change="{!c.chechboxclick}" />
+                            </div>
+                            
+                        </td>
+                        
+                    </aura:if>
+                    <td data-index="{!index}" role="gridcell">
+                        
+                        <div class="slds-truncate" title="Approve">
+                            <ui:inputCheckbox aura:id="checkapproved" value="{!item.Approved__c}" />
+                        </div>
+                        
+                    </td>
+                    <td data-index="{!index}" role="gridcell">
+                        
+                        <div class="slds-truncate" title="Approve">
+                            <ui:inputCheckbox aura:id="checkapproved" value="{!item.Reject__c}" />
+                        </div>
+                    </td>
+                </tr>
+                
+                
+            </aura:iteration>
+            
+        </tbody>
+    </table>
+    <div class ="slds-align_absolute-center">
+        <lightning:button  label="Previous" variant="brand" class="slds-m-right_medium" onclick="{! c.PreviousList }"  disabled="{!v.previousdisable}"/>
+        <lightning:button  label="Next" variant="brand" onclick="{! c.NextList }" disabled="{!v.Nextdisable}" />
+        
+        
+        
+    </div>
+    
+    
+    <aura:if isTrue="{!v.newrewardbool}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-backdrop">
+            <div class="slds-modal__container">
+                
+                <header class="slds-modal__header">
+                    Create new reward
+                </header>
+                
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <form class="slds-form--stacked">          
+                        <lightning:input aura:id="rewardform" label="Reward Name"
+                                         name="rewardname"
+                                         value="{!v.newReward.Name}"
+                                         required="true"/> 
+                        <c:customLookup objectAPIName="Account" label="Account" IconName="standard:account" selectedRecord="{!v.selectedLookUpRecord}"/>	
+                        
+                        <lightning:select aura:id="select" name="select1" label="Record type" required="true">
+                            <option value="">choose one...</option>
+                            <option value="1">Payment</option>
+                            <option value="2">Survey</option>
+                            <option value="3">renew</option>
+                        </lightning:select>
+                        
+                        <lightning:input type="date" aura:id="rewardform" label="Move In Date"
+                                         name="moveIndate"
+                                         value="{!v.newReward.Move_In_Date__c}"/>
+                        <lightning:input type="date" aura:id="rewardform" label="Start Date"  
+                                         name="Start Date" 
+                                         checked="{!v.newReward.Start_Date__c}"/>
+                        <lightning:input type="number" aura:id="rewardform" label="Total"  
+                                         name="Total"
+                                         checked="{!v.newReward.Total__c}"/>
+                        <lightning:input type="date" aura:id="rewardform" label="Payment Date"  
+                                         name="payment Date"
+                                         checked="{!v.newReward.Payment_Date__c}"/>
+                        
+                        
+                        
+                        <lightning:button label="Create Reward" 
+                                          class="slds-m-top--medium"
+                                          variant="brand"
+                                          onclick="{!c.clickCreate}"/>
+                        <lightning:button label="Cancel" 
+                                          class="slds-m-top--medium"
+                                          variant="brand"
+                                          onclick="{!c.cancel}"/>
+                    </form>
+                    
+                </div>
+                
+            </div>
+        </section>
+    </aura:if> 
+</aura:component>

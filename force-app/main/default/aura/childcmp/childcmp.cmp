@@ -1,0 +1,32 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" controller="accountApex" access="global" >
+    <aura:attribute name="objname" type="sobject"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="newaccount" type="sobject"/>
+    <aura:attribute name="simpleNewaccount" type="sobject"/>
+    <aura:attribute name="newaccountError" type="sobject"/>
+    <aura:attribute name="bool" type="boolean" default ="false"/>
+    
+    
+    <aura:registerEvent name="Event1" type="c:lookUpevent"/>
+    
+        <li  role="presentation" class="slds-listbox__item"  onclick="{!c.selectRecord}" >
+            <span id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                <span class="slds-media__figure">
+                    <span class="slds-icon_container" title="Description of icon when needed">
+                        <lightning:icon iconName="standard:account" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                        <span class="slds-assistive-text">Description of icon</span>
+                    </span>
+                    
+                </span>    
+                <span class="slds-media__body " >  
+                    <span class="slds-listbox__option-text slds-listbox__option-text_entity" >{!v.objname.Name}</span>
+                </span>
+                <lightning:button onclick="{!c.editAccount}" aura:id="Responsible" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small slds-float_right" tabindex="0" title="Edit Responsible">
+                    <lightning:icon iconName="utility:edit" size="xx-small" alternativeText="edit"/>
+                    <span class="slds-assistive-text">Edit Account</span></lightning:button>
+            </span>
+            
+        </li>
+    <span></span>
+    
+</aura:component>

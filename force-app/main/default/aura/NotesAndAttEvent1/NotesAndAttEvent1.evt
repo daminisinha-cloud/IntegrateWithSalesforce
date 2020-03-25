@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" >
+    <aura:attribute name="notesOrAtt" type="String"/>
+    <aura:attribute name="objName" type="String"/>
+    <aura:attribute name="record" type="Object"/>
+ 
+</aura:event>

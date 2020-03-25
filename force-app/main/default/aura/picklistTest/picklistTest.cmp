@@ -1,0 +1,19 @@
+<aura:component controller="picklistTest" >
+    <aura:attribute name="picklist" type="list"/>
+     <aura:attribute name="picklist2" type="list"/>
+    <aura:attribute name="picklistvalue" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+        <lightning:select aura:id="Picklist" value="{!v.picklistvalue}" onchange="{!c.handleOnChange}" name="Object" label="Object" required="true">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.picklist}" var="ind" indexVar="key">
+                        <option text="{!ind}" value="{!ind}"/>
+                    </aura:iteration>
+                </lightning:select>
+     <lightning:select aura:id="picklist2" value="{!v.picklist2}" name="Object" label="Object" required="true">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.picklist2}" var="ind" indexVar="key">
+                        <option text="{!ind}" value="{!ind}"/>
+                    </aura:iteration>
+                </lightning:select>
+</aura:component>

@@ -1,0 +1,28 @@
+<aura:component controller="CampingListController" >
+  <aura:attribute name="items" type="Camping_Item__c[]"/>
+    <aura:attribute name="newItem" type="Camping_Item__c" default="{'sobjectType': 'Camping_Item__c',
+                                                                   'Name': '',
+                                                                   'Price__c': 0,
+                                                                   'Quantity__c': 0,}"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler name="addItem" event="c:addItemEvent" action="{!c.handleAddItem }"/>
+
+
+
+    
+    <form>
+      
+        <lightning:input aura:id="campingl_list" label="name" value="{!v.newItem.Name}"/>
+        <lightning:input type="number" aura:id="campingl_list" label="Quantity" min="1" value="{!v.newItem.Quantity__c}"/>
+        <lightning:input type="number" formatter="currency" aura:id="campingl_list" label="Price" min="0.1" value="{!v.newItem.Price__c}"/>
+        <lightning:input type="checkbox" aura:id="campingl_list" label="packed" checked="{!v.newItem.Packed__c}"/>
+        <lightning:button label="Submit" onclick="{!c.createcamping }"/>
+        <aura:iteration items="{!v.items}" var="items">
+                    <c:campinglistitem item="{!items}"/>
+
+                </aura:iteration>
+
+    </form>
+    <c:campingListForm/>
+
+</aura:component>

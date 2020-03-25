@@ -1,0 +1,7 @@
+<aura:event type="component" >
+    <aura:attribute name="objname" type="sobject"/>
+    <aura:attribute name="record" type="sobject"/>
+    <aura:attribute name="bool" type="boolean"/>
+    
+    
+</aura:event>

@@ -1,0 +1,13 @@
+<aura:component >
+    <lightning:layout class="slds-page-header slds-page-header--object-home">
+        
+        <lightning:layoutItem padding="horizontal-small">
+            <div class="page-section page-header">
+                <h1 class="slds-text-heading--label">camping</h1>
+                <h2 class="slds-text-heading--medium">campinglist</h2>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+     
+    <h1><c:campinglist/></h1>
+</aura:component>

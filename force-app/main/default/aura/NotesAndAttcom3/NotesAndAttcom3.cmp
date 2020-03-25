@@ -1,0 +1,38 @@
+<aura:component controller="NotesAndAtt">
+    <aura:attribute name="objectName" type="String"/>
+    <aura:attribute name="Radio_value" type="String"/>
+    <aura:attribute name="record_id" type="Id"/>
+    <aura:attribute name="val" type="String"/>
+    <aura:handler event="c:NotesAndAttEvent1" action="{!c.firevent3}"/>
+    <aura:attribute name="record" type="sObject"/>
+    <div>
+        <div class="slds-p-bottom_large slds-border_top slds-border_left slds-border_right slds-p-top_x-large">
+            <div class="slds-grid slds-gutters slds-gutter_direct-xx-large">
+                <div class="slds-col slds-size_1-of-4">
+                    <span><lightning:input aura:id="enter-text" name="input" label="Search by record name" /><br/>
+                        <lightning:button variant="Brand" label="Search"  onclick="{!c.getcompletedata}" /> </span></div>
+                <div class="slds-col slds-size_2-of-4">
+                    <div onkeyup="{!c.handleKeyUp}">
+                        <lightning:input
+                                         aura:id="enter-search"
+                                         name="enter-search"
+                                         label="Search when user hits the key"
+                                         type="search"/>
+                        <div class="pointer slds-scrollable"  onclick="{!c.selectrecord}" >
+                            
+                            <aura:iteration items="{!v.record}" var="list" indexVar="ind">
+                                <ol>
+                                    <li data-index="{!ind}">{!list.Name}</li>
+                                </ol> 
+                                
+                            </aura:iteration>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</aura:component>

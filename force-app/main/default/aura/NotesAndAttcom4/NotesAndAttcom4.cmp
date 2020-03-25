@@ -1,0 +1,44 @@
+<aura:component controller="NotesAndAtt">
+    <div class="slds-badge">All Notes And Attachments</div>
+    <aura:attribute name="recordview" type="List"/>
+    <aura:attribute name="radioValue" type="String"/>
+    <aura:attribute name="booleanValue" type="boolean" default="true"/>
+    <aura:handler event="c:NotesAndAttEvent1" action="{!c.firevent4}"/>
+    
+	<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+  <thead>
+    <tr class="slds-line-height_reset">
+      <th scope="col">
+        <div class="slds-truncate" title="Name"> Name</div>
+      </th>
+      <th  scope="col">
+        <div class="slds-truncate" title="Type">Type</div>
+      </th>
+      <th  scope="col">
+        <div class="slds-truncate" title="ParentName">ParentName</div>
+        </th></tr>
+        </thead>
+        <tbody>
+        <aura:iteration items="{!v.recordview}" var="rcord">
+            <tr>
+                <aura:if isTrue="{!v.booleanValue}">
+                     <th>{!rcord.Title}</th>
+                    <aura:set attribute="else"><th>{!rcord.Name}
+                        
+                        </th>
+                        
+                    </aura:set>
+                </aura:if>
+               
+
+                <th> {!v.radioValue}</th>
+                <th>{!rcord.Parent.Type}</th>
+               <aura:if isTrue="{!v.booleanValue}">
+                     <aura:set attribute="else"> <a href="{!rcord.Id}" target="_blank" download="{!rcord.Name}">Download</a>
+                          </aura:set></aura:if>
+            </tr>
+            
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

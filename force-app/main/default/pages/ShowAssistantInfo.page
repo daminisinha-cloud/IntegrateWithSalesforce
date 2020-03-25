@@ -1,0 +1,7 @@
+<apex:page standardController="contact">
+    <apex:pageblock >
+     <apex:outputField value="{!contact.assistantname}"/>
+        <a href="tel:{!contact.assistantphone}"/>
+    </apex:pageblock>
+    
+</apex:page>

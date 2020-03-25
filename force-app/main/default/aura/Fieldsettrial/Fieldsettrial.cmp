@@ -1,0 +1,17 @@
+<aura:component controller="Fieldsettrialapex" >
+    <aura:attribute name ="Fields" type="list"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class=" slds-scrollable " style="height:5rem;width:24rem" onclick="{!c.selectrecord}" >
+        <aura:iteration items="{!v.Fields}" var="list" indexVar="ind">
+            <ol>
+                <span id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                    <ui:inputCheckbox aura:id="checkbox"  change="{!c.onCheck}"/>
+                    <li  data-index="{!ind}">{!list}</li>
+                </span>
+                
+            </ol> 
+            
+            
+        </aura:iteration>
+    </div>
+</aura:component>

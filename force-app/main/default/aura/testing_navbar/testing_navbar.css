@@ -1,0 +1,30 @@
+.THIS .slds-form-element__control > .slds-select_container > .slds-select{
+   min-height:27px;
+    min-width:100px;
+   
+}
+.THIS .slds-form-element__control > .slds-select_container {
+     display: inline-block;
+}
+.THIS .navbar-form >  .slds-form-element > .slds-form-element__label{
+  font-size:12px;
+}
+.THIS.sidedesktop{
+  height: 100%;
+  width: 25%;
+  position: fixed;
+  right :0;
+  background-color: #F0F0F0;
+  overflow-x: hidden;
+  padding-top: 80px;
+    top:97px;
+}
+.THIS.sidenavmobile{
+  height: 100%;
+  width: 75%;
+ position: absolute;
+  right :0;
+  background-color: #F0F0F0;
+  padding-top: 5px;
+    top:163px;
+}

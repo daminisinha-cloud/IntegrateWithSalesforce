@@ -1,0 +1,23 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="accountlightninglist"  >
+    <aura:attribute name="account" type="Account"/>
+    <aura:attribute name="recordid" type="ID" default="0016F000030gznzQAA"/>
+    <aura:attribute name="conlist" type="Contact"/>
+    <aura:attribute name="bool" type="boolean" />
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <lightning:card title="Account summary" iconName="standard:account"/>
+     <lightning:recordViewForm recordId="{!v.recordid}" objectApiName="Account">
+        <div class="slds-box">
+            <lightning:outputField fieldName="Name"/>
+            <lightning:outputField fieldName="Phone"/>
+        </div>
+    </lightning:recordViewForm>
+    <ui:inputCheckbox aura:id="checkbox" label="viewdetail" value="{!v.bool}" />
+    <aura:if isTrue="{!v.bool}">
+       
+       <aura:iteration items="{!v.conlist}" var="con">
+        <p>{!con.LastName}</p>
+        </aura:iteration>
+        
+    </aura:if> 
+</aura:component>

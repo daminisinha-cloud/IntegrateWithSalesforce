@@ -1,0 +1,83 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="accountApex" >
+    <aura:attribute name="objname" type="sobject"/>
+    <aura:attribute name="record" type="sobject"/>
+    <aura:attribute name="searchkey" type="string"/>
+    <aura:attribute name="Message" type="string"/>
+    <aura:attribute name="objnameid" type="sobject"/>
+     <aura:attribute name="object" type="sobject" />
+    <aura:attribute name="bool" type="boolean" />
+    
+    <aura:registerEvent name="Event2" type="c:lookUpevent"/>
+    <aura:registerEvent name="appEvent" type="c:accountAppEvent"/>
+    <aura:handler name="Event1" event="c:lookUpevent" action="{!c.handleComponentEvent}"/>
+    <aura:handler  event="c:accountAppEvent" action="{!c.handleEvent}"/>
+   
+    <aura:attribute name="fields" type="String[]"  default="['Name','Phone']"/>
+    
+    <div class="slds-form-element slds-lookup slds-is-close slds-align_absolute-center">
+        <label class="slds-form-element__label slds-text-heading_large slds-text-title_bold" >Search for Account Name</label>        
+    </div>
+    <div onmouseleave="{!c.onblur}" aura:id="searchRes" class="slds-form-element slds-lookup slds-is-close" data-select="single">
+        <div class="slds-form-element__control">
+            
+            <div class="slds-input-has-icon slds-input-has-icon--right slds-col slds-size_1-of-4 slds-show slds-align_absolute-center">
+                <label class="slds-form-element__label " for="lookup-348">Account name</label>
+                <div aura:id="lookup-pill" class="slds-pill-container slds-hide ">
+                    <lightning:pill class="pillSize" label="{!v.objname.Name}" name="{!v.objname.Name}" onremove="{! c.clear }">
+                        <aura:set attribute="media">
+                            <lightning:icon iconName="standard:account" size="x-small"/>
+                        </aura:set>
+                    </lightning:pill>
+                </div>
+                
+                <div aura:id="lookupField" >
+                    <lightning:icon class="slds-input__icon  " iconName="utility:search" size="x-small" alternativeText="search"/>
+                    
+                    <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                               <span class="slds-assistive-text"></span>
+                    </span>
+                    <ui:inputText click="{!c.onfocus}" updateOn="keyup" keyup="{!c.keyPressController}"  class="slds-lookup__search-input slds-input  leftPaddingClass " value="{!v.searchkey}" placeholder="search.."/>
+               
+                   
+                </div>   
+                <ul style="min-height:40px;margin-top:0px !important" class="slds-scrollable slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                    <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinner"/>
+                    <center> {!v.Message}</center>
+                    <div class= "" style="height: 10rem; width: 24rem;" >
+                        <lightning:button variant="base" label="New" title="create new account" onclick="{!c.handleClick }"/>
+                    <aura:iteration items="{!v.record}" var="singleRec">
+                        <c:childcmp objname="{!singleRec}"/>
+                    </aura:iteration>
+                    </div>
+                    
+                </ul>
+                <lightning:button variant="brand" label="Search" title="Search" onclick="{!c.SearchContact }"/>	
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.bool}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-backdrop">
+            <div class="slds-modal__container">
+                
+                <header class="slds-modal__header">
+                    Edit account
+                </header>
+                
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">  
+                    <lightning:recordForm aura:id="edit account"
+                                          recordId = "{!v.objnameid}"	
+                                          objectApiName="Account"
+                                          oncancel ="{!c.cancelrecord}"
+                                          fields="{!v.fields}"
+                                          mode="edit" 
+                                          onsuccess="{!c.handleSuccess}"
+                                          onsubmit="{!c.onsubmit}"
+                                          />
+                    
+                </div>
+                
+            </div>
+        </section>
+        
+    </aura:if>              
+</aura:component>

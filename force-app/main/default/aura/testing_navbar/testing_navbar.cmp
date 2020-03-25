@@ -1,0 +1,312 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <ltng:require styles="{!$Resource.bootstrap_css}"
+                  scripts="{!join(',', $Resource.latestjquery,$Resource.bootjs)}" />
+    
+    <aura:attribute name="isTrue" type="Boolean" Default="false"/>
+    <aura:attribute name="Spinner" type="Boolean" Default="false"/>
+    <aura:attribute name="isDelete" type="Boolean" Default="false"/>
+    
+    <aura:attribute name="isGroup" type="Boolean" Default="false"/>
+    <aura:attribute name="isSave" type="Boolean" Default="false"/>
+    <aura:attribute name="ShowModule" type="boolean" default="false"/> 
+    
+    <aura:attribute name="objlist" type="List" />
+    <aura:attribute name="selectedObject" type="String"/>
+    <aura:attribute name="selectedListView" type="String"/>
+    
+    <aura:attribute name="selectedBoard" type="String"/>
+    <aura:attribute name="selectedGroupField" type="String"/>
+    <aura:attribute name="selectedSummaryField" type="String"/>
+    
+    <aura:attribute name="inputLabel" type="String"/>
+    <aura:attribute name="listViewRecords" type="String[]"/>
+    <aura:attribute name="recordsToShow" type="String[]" default="[]"/>
+    
+    <aura:attribute name="savedBoardsList" type="String[]" default="[]"/>
+    <aura:attribute name="selectedTemplateFields" type="String[]"/>
+    <aura:attribute name="setFieldLimit" type="Integer[]"/>
+    
+    <aura:attribute name="groupByRecords" type="String[]"/>
+    <aura:attribute name="summaryFieldRecords" type="String[]"/>
+    
+    <aura:attribute name="TemplateFieldValues" type="object"/> 
+    <aura:attribute name="TemplateFieldchecked" type="List"/>
+    <aura:attribute name="checkedTemplateFieldLength" type="Integer"/>
+    
+    <aura:attribute name="searchTemplateField" type="String"/>
+    <aura:attribute name="recordWrapper" type="List"/> 
+    <aura:attribute name="recordEditList" type="List"/>
+    <aura:attribute name="LabelMap" type="List"/>
+    <aura:attribute name="recordCountMap" type="List"/>
+    <aura:attribute name="dataIndex" type="Integer"/>
+    <aura:attribute name="groupId" type="Integer"/>
+    <aura:attribute name="start" type="Integer" default="1" />
+    
+    <aura:attribute name="NextcolumnIndex" type="Integer" />
+    <aura:attribute name="NextrowIndex" type="Integer" />
+    <aura:attribute name="MaxRecordsInGroup" type="Integer"/>
+    <aura:attribute name="totalPages" type="Integer" />
+    <aura:attribute name="recordsPerPage" type="Integer" default="10"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="paginationdata" type="List"/>
+    <aura:attribute name="recordIndex" type="Integer"/>
+    <aura:attribute name="isOpenRecordEdit" type="boolean" default="false"/>
+    <aura:attribute name="selectedRecordId" type="String"/>
+    <aura:attribute name="updatedGroup" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="collapse" type="String" default="collapse"/>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Board Anything</a>
+                
+                <form class="navbar-form navbar-left" >
+                    
+                    
+                    <lightning:select class="selectBoard "   value="{!v.selectedBoard}" label="Saved Boards">
+                        <aura:iteration items="{!v.savedBoardsList}" var="board">
+                            <option text="{!board}"></option>
+                        </aura:iteration>
+                    </lightning:select>
+                    
+                    
+                </form>
+                
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" onclick="{!c.button}">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                </button>
+            </div>
+            
+            <form class="form-group">
+                
+                <div class="collapse  navbar-collapse " data-toggle="{!v.collapse}" id="myNavbar" data-target="#myNavbar">
+                   
+                    <!--<div class="mobile_navbar " style=" width: 300px; background-color: white;">-->
+                    <ul class="nav navbar-nav ">
+                        <li ><a ><button class="btn btn-default navbar-btn"  title="Refresh">
+                            <lightning:icon iconName="utility:home" alternativeText="Home"/>
+                            <span class="slds-assistive-text">Home</span>
+                            </button>
+                            </a>
+                        </li>
+                        <li ><a ><button class=" btn btn-default  navbar-btn "   title="Refresh">
+                            <lightning:icon iconName="utility:refresh" alternativeText="Refresh"  />
+                            <span class="slds-assistive-text">Refresh</span>
+                            </button>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right ">
+                        <li>
+                            <a ><button class=" btn btn-default navbar-btn  "  title="Layout" onclick="{!c.ShowModuleBox}">
+                                <lightning:icon class="styleIcon" iconName="utility:layout" alternativeText="Layout"/>
+                                <span class="slds-assistive-text">Layout</span>
+                                </button>
+                            </a>
+                            
+                        </li>            
+                        <li>
+                            
+                            <a ><button class=" btn btn-default navbar-btn "  title="New" onclick="{!c.newButtonsidebar}">
+                                <lightning:icon class="styleIcon" iconName="utility:add" alternativeText="Add" />
+                                <span class="slds-assistive-text">New</span>
+                                </button>
+                            </a>
+                            
+                        </li>
+                        <li>
+                            <a > <button class=" btn btn-default navbar-btn "  title="Edit" onclick="{!c.forDeleteBoardRecord}">
+                                <lightning:icon class="styleIcon" iconName="utility:edit" alternativeText="Edit"/>
+                                <span class="slds-assistive-text">Edit</span>
+                                </button>
+                            </a>
+                        </li>
+                        <li>
+                            <a > <button class=" btn btn-default navbar-btn " title="Filter" onclick="{!c.fetchGroupingFields}">
+                                <lightning:icon class="styleIcon" iconName="utility:richtextoutdent" alternativeText="Filter" />
+                                <span class="slds-assistive-text">Filter</span>
+                                </button>
+                            </a>
+                            
+                        </li>
+                    </ul>
+                   <!-- </div>-->
+                </div>
+            </form>
+        </div>
+    </nav>
+        <aura:if isTrue="{!v.isTrue}"> 
+        <div aura:id="filterDiv" class="sidenav slds-hide"> 
+        
+            <aura:if isTrue="{!v.Spinner}">
+                <div aura:id="spinnerId" class="slds-spinner_container">
+                    <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                        <span class="slds-assistive-text">Please Wait</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.isDelete}">
+                <div class="slds-form-element slds-m-left_small slds-m-right_small">
+                    <lightning:button variant="brand" label="Delete Board" title="Delete Board" onclick="{!c.forDeleteBoard}"/>
+                </div>
+            </aura:if>
+            <div class="slds-form-element slds-m-left_small slds-m-right_small">
+                <lightning:select aura:id="selectObj" name="select" value="{!v.selectedObject}" onchange="{!c.onobjselect}" label="Select Object">
+                    <aura:iteration items="{!v.objlist}" var="objname">
+                        <option text="{!objname}"></option>
+                    </aura:iteration>
+                </lightning:select>
+            </div><br/>            
+            <div class="slds-form-element slds-m-left_small slds-m-right_small">
+                <lightning:select name="select" value="{!v.selectedListView}" label="Select ListView">
+                    <aura:iteration items="{!v.listViewRecords}" var="objname">
+                        <option text="{!objname}"></option>
+                    </aura:iteration>
+                </lightning:select>
+            </div><br/> 
+            <div class="slds-form-element slds-m-left_small slds-m-right_small">       
+                <lightning:select name="groupby" value="{!v.selectedGroupField}" label="Group By">
+                    <aura:iteration items="{!v.groupByRecords}" var="groupRecords">
+                        <option text="{!groupRecords}"></option>
+                    </aura:iteration>
+                </lightning:select>
+            </div><br/>           
+            <div class="slds-form-element slds-m-left_small slds-m-right_small">
+                <lightning:select name="select" value="{!v.selectedSummaryField}" label="Summary Fields">
+                    <option>--None--</option>
+                    <aura:iteration items="{!v.summaryFieldRecords}" var="summaryfields">
+                        <option text="{!summaryfields}"></option>
+                    </aura:iteration>
+                </lightning:select>
+                <div class="slds-text-color_destructive slds-hide" aura:id="SummaryField-error-01">This field is required</div>
+                
+            </div><br/>
+            
+            <!-- Template Field-->
+            <div class="slds-form-element slds-m-left_small slds-m-right_small">  
+                <!--Input Field-->
+                <label class="slds-form-element__label" for="templatesearch">
+                    <abbr class="slds-required" title="required">* </abbr>Template Fields</label>
+                <div aura:id="lookupField" onkeyup="{!c.handleKeyUpForTemplateField}" class="slds-show">  
+                    <lightning:input id="templatesearch"  class="slds-m-top_none" aura:id="enter-search" name="enter-search" value="{!v.searchTemplateField}" onfocus="{!c.handleFocusOnSearch}" type="search"/>
+                    <div class="slds-text-color_destructive slds-hide" aura:id="Template-error-01">This field is required</div>
+                </div>
+                <div aura:id="dropTemplateFieldId" class="slds-dropdown slds_col slds-scrollable" style="height:9rem;width:100%;postion:absolute;top:52px" onmouseenter="" onmouseleave="{!c.handleMouseLeaveTemplateFields}">  
+                    <ul role="menu" style="margin-left:7px;">
+                        <aura:iteration items="{!v.TemplateFieldValues}" var="template">
+                            <li>
+                                <span id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                    <label class="slds-checkbox" >
+                                        <ui:inputCheckbox  value="{!template.checked}" change="{!c.templateCheckboxHandler}"/>
+                                        <span class="slds-checkbox--faux" />
+                                    </label>
+                                    <span class="slds-media__body">  
+                                        <span class="slds-listbox__option-text slds-listbox__option-text_entity">{!template.templateFields}</span>
+                                    </span>
+                                </span>
+                            </li>
+                        </aura:iteration>
+                    </ul>
+                </div>
+            </div><br/>
+            <div aura:id="lookup-pill" class="slds-pill slds-hide slds-m-left_small slds-m-right_small" style="margin-top:8px;">
+                <lightning:pill class="pillSize" label="{!v.checkedTemplateFieldLength +' Selected'}"  onremove="{! c.clear }"></lightning:pill>
+            </div>
+            <!-- Template End Field -->    
+            <!-- Label Field -->
+            <div aura:id="labelfield" class="slds-m-top_x-large slds-form-element slds-m-left_small slds-m-right_small">
+                <lightning:input aura:id="LabelInputField" class="inputLabel" name="Label" value="{!v.inputLabel}" placeholder="Enter Label" label="Enter Label" />
+            </div><br/> 
+            
+            <aura:if isTrue="{!v.isSave}">
+                <lightning:button class="slds-m-top_x-small slds-m-left_small slds-m-right_medium slds-float_right" variant="brand" label="Save" title="Save" onclick="{!c.saveBoardRecord}"/>
+                <aura:set attribute="else">
+                    <lightning:button variant="brand" label="Update" title="Update" onclick="{!c.saveBoardRecord}"/>
+                </aura:set>
+            </aura:if>
+            <aura:if isTrue="{!v.isSave}">
+                <lightning:button class="slds-m-top_x-small slds-m-left_small slds-m-right_medium slds-float_right" variant="Neutral" label="Cancel" title="Cancel" onclick="{!c.CloseModel}"/>
+                <aura:set attribute="else">
+                    <lightning:button variant="Neutral" label="Update" title="Update" onclick="{!c.updateBoardRecord}"/>
+                </aura:set>
+            </aura:if>
+                </div>
+           
+     
+    </aura:if>
+    <aura:if isTrue="{!v.isGroup}">
+        <div id="filterDivForGroup" class="sidenav">    
+            <table class="slds-table slds-table--bordered">
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <th class="slds-cell-shrink">
+                            <label class="slds-checkbox" >
+                                <ui:inputCheckbox />
+                                <span class="slds-checkbox--faux" />
+                            </label>
+                        </th>
+                        <th class="slds-is-sortable">
+                            <div class="slds-truncate" style="font-size:13px;">Column Name</div>
+                        </th>
+                        <th style="text-align:right;padding:3px 3px 3px 0px;">
+                            <lightning:button variant="brand" label="Brand action" title="Brand action" />
+                        </th>
+                        <th style="text-align:right;padding:3px 11px 3px 0px;">
+                            <lightning:buttonMenu aura:id="menu" alternativeText="Show menu">
+                                <lightning:menuItem value="MenuItemOne" label="Menu Item One" />
+                                <lightning:menuItem value="MenuItemTwo" label="Menu Item Two" />
+                                <lightning:menuItem value="MenuItemThree" label="Menu Item Three" disabled="true" />
+                                <lightning:menuItem value="MenuItemFour" label="Menu Item Four" />
+                            </lightning:buttonMenu>
+                        </th>
+                    </tr>
+                </thead>
+                
+            </table>
+        </div></aura:if>
+    
+    <aura:if isTrue="{!v.ShowModule}">
+        <div class="demo-only" style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        
+                        <lightning:buttonIcon iconName="utility:close" variant="bare" onclick="{! c.HideMe }" 
+                                              alternativeText="Close" class="slds-modal__close" />
+                        
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Template Layout</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        
+                        <lightning:select name="Set Maximum Limit For Template Fields" value="{!v.setFieldLimit}" label="Set Maximum Limit For Template Fields" >
+                            <aura:iteration items="{!v.setFieldLimit}" var="temp">
+                                <option text="{!temp}"></option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        
+                        <p>Rearrange Template Fields</p>
+                        <ul ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <aura:iteration items="{!v.selectedTemplateFields}" var="selField">
+                                <li class="slds-truncate slds-text-heading--label templateSetting slds-float--left ui-sortable-handle makeItDrag" draggable="true" ondragstart="{!c.drag}" id="{!selField}">{!selField}</li>
+                            </aura:iteration>
+                        </ul>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral">Close</button>
+                        <lightning:button variant="brand" label="Hide Me" title="Hide Me" onclick="{! c.HideMe }"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>  
+    </aura:if>   
+    
+</aura:component>

@@ -1,0 +1,60 @@
+<apex:page controller="opportunity_vfController" showHeader="false" tabStyle="opportunity" >
+    
+       <script  type="text/javascript">
+    function enabledisable(input_checkbox ){
+       
+        var check_box =document.getElementsByTagName("input"),  i=check_box.length;
+        while(i--){
+            if (check_box[i].id !== input_checkbox.id) {
+                check_box[i].checked = false;
+            }
+        
+        }
+    }
+    
+    </script> 
+    <apex:pageBlock id="pgBlock" title="Opportunity Edit">
+        <apex:form id="frm">
+            <apex:pageBlockSection title="Opportunity Information">            
+                <apex:inputField value="{!opp.name}" required="false" />
+                <apex:inputField value="{!opp.amount}" />
+                <apex:inputField value="{!opp.closedate}" required="false"/> 
+                <apex:inputField value="{!opp.accountid}" />
+                <apex:inputField value="{!opp.stagename}" required="false"/>
+                <apex:inputField value="{!opp.leadsource}"/>
+                <apex:inputField value="{!opp.probability}" required="false"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Contact Role">
+                <apex:inputField value="{!contactrole.contactid}" required="false"/>                                                                                                             
+                <apex:inputField value="{!contactrole.Role}" required="false"/>   
+                <apex:commandLink value="Add Contact Role" action="{!ContactRole}" />            
+            </apex:pageBlockSection>
+            <apex:pageBlockSection id="pbSec" title="Select Contact Role"/>            
+            <apex:pageBlockTable value="{!conRoleList}" var="contactrole" >
+                <apex:column headerValue="primary"><apex:inputcheckbox id="chk" Onclick="enabledisable(this )" /></apex:column>
+                    
+                <apex:column value="{!contactrole.contactid}"/>
+                <apex:column value="{!contactrole.role}"/>
+            </apex:pageBlockTable> 
+            <apex:pageBlocksection >
+                <apex:commandbutton value="Add Contact" action="{!opp_list}">
+                </apex:commandbutton>
+            </apex:pageBlocksection>
+            <apex:pageblock >
+                <apex:commandbutton value="Save" action="{!save}"/>
+                <apex:commandbutton value="cancel"/>
+                <apex:pageblocksection >
+                    <apex:pageblocktable value="{!wrapper_list}" var="wrapper_obj">
+                        <apex:column value="{!wrapper_obj.opp_wra.name}"/>
+                        <apex:column value="{!wrapper_obj.opp_wra.amount}"/>
+                        <apex:column headerValue="contact" >
+                            <apex:repeat value="{!wrapper_obj.conRoleList_wra}" var="contactrolelist"  >
+                                <apex:outputfield value="{!contactrolelist.contactid}"/>
+                            </apex:repeat> 
+                        </apex:column>
+                    </apex:pageblocktable>
+                </apex:pageblocksection>
+            </apex:pageblock>	
+        </apex:form>
+        </apex:pageBlock> 
+   </apex:page>

@@ -1,0 +1,50 @@
+<aura:component  controller="rewardapex">
+     <aura:attribute name="objectAPIName" type="String" default="Account"/>
+    <aura:attribute name="completerewardlist" type="sObject"/>
+    <aura:attribute name="paymentlist" type="list"/>
+    <aura:attribute name="Renewlist" type="list"/>
+    <aura:attribute name="surveylist" type="list"/>
+    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="tabId" type="String" default="all"/>
+     <aura:attribute name="tab" type="String" default="all"/>
+    
+    
+    <aura:handler name="oSelectedRecordEvent" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEvent}"/>
+   <!-- <aura:handler name="change" value="{!v.tabId}" action="{!c.handleChange}"/>-->
+    
+    <lightning:layout  class="slds-page-header header">
+        
+        
+        <lightning:layoutItem>
+            <h1 class="slds-text-heading--large"> Waypoint homes</h1>
+            
+        </lightning:layoutItem>
+        <div class="slds-align_absolute-center slds-size--1-of-4">
+            <c:customLookup objectAPIName="{!v.objectAPIName}" label="" selectedRecord="{!v.selectedLookUpRecord}"/>	
+            
+        </div>
+        
+    </lightning:layout>
+    
+     
+    <lightning:tabset onselect="{!c.handleChange}" aura:id="tabs" selectedTabId="{!v.tabId}" >
+        <lightning:tab  id="all" label="All">
+            <c:RewardDisplay  aura:id="all" />
+        </lightning:tab>
+        <lightning:tab label="Payment" id ="Pay">
+            <c:RewardDisplay aura:id="Payment"  />
+        </lightning:tab>
+        
+        <lightning:tab label="Survey" id ="Sur">
+            
+            <c:RewardDisplay   aura:id="Survey"  />
+        </lightning:tab>
+        <lightning:tab label="Renew" id ="new">
+            <c:RewardDisplay    aura:id="Renew"/>
+        </lightning:tab>
+          </lightning:tabset>
+    
+    
+    
+    
+</aura:component>

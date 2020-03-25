@@ -1,0 +1,21 @@
+<aura:component >
+      <aura:attribute name="options" type="List"/>
+    
+    <lightning:layout horizontalAlign="space">
+    
+        <lightning:layoutItem padding="around-small">
+            <lightning:select name="boat_type" label="" aura:id="boat_type" >
+               <option value="">All Types</option>
+        <option value="1">House boat</option>
+        <option value="2">two</option>
+        <option value="3">three</option>
+            </lightning:select>
+           
+           <lightning:button variant="brand" label="Search" title="Search" onclick="{!c.Search}"/>
+      
+          <lightning:button label="New" title="New" onclick="{!c.new}"/>
+        </lightning:layoutItem>
+        
+       
+    </lightning:layout>
+</aura:component>

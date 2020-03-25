@@ -1,0 +1,25 @@
+<apex:page controller="controlroleclass" >
+   <apex:pageBlock title="Opportunity Edit">
+        <apex:form >
+    <apex:pageBlockSection title="Opportunity Information">
+        <apex:inputField value="{!opportunities.name}" />
+        <apex:inputField value="{!opportunities.Amount}" />
+        <apex:inputField value="{!opportunities.CloseDate}"/>
+        <apex:inputField value="{!opportunities.Accountid}"/>
+        <apex:inputField value="{!opportunities.stagename}" />
+        <apex:inputField value="{!opportunities.LeadSource}"/>
+        <apex:inputField value="{!opportunities.Probability}" />
+        </apex:pageBlockSection>
+           <apex:pageBlockSection title="Contact Role">
+                <apex:repeat value="{!ContactRoles}" var="ContactRole">
+             <apex:inputField value="{!ContactRole.contactid}"/>
+            <apex:inputField value="{!ContactRole.Role}"/>
+          </apex:repeat>
+                 <apex:commandButton title="Add Contact Role" />
+        </apex:pageBlockSection>
+            <apex:pageBlockSection title="Select Contact Role" >
+            
+            </apex:pageBlockSection>
+            </apex:form>
+    </apex:pageBlock>
+</apex:page>

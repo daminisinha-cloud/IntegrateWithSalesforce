@@ -1,0 +1,22 @@
+<aura:component >
+    <aura:attribute name="options" type="List" default="[ {'label': 'Note', 'value': 'Note'},
+                                                        {'label': 'Attachment', 'value': 'Attachment'}
+                                                        ]"/>
+    <aura:attribute name="value" type="String" default="Note"/>
+    <aura:attribute name="record" type="Object"/>
+    <aura:attribute name="objName" type="String"/>
+    <aura:attribute name="val" type="String" default="a"/>
+    <aura:registerevent name="addItem" type="c:NotesAndAttEvent1"/>
+    <aura:handler event="c:NotesAndAttEvent1" action="{!c.fireEventcom1}"/>
+    <div class="slds-p-bottom_large slds-border_top slds-border_left slds-border_bottom slds-border_right">
+
+    <lightning:radioGroup
+                          aura:id="mygroup"
+                          name="Radio Button Group"
+                          label="Select note or attachment"
+                          options="{!v.options}"
+                          value="{!v.value}"
+                          onchange="{!c.handleChange}"
+                          required="true" />
+        </div>
+</aura:component>

@@ -1,0 +1,22 @@
+<aura:component controller="NotesAndAtt">
+  <aura:attribute name="options" type="List"/>
+<aura:attribute name="selectedValue" type="String" default="Note"/>
+    
+  <aura:registerevent name="addItem" type="c:NotesAndAttEvent1"/>
+    
+    <aura:handler event="c:NotesAndAttEvent1" action="{!c.firevent}"/>
+    <aura:handler name="init" action="{!c.doInIt}" value="{!this}"/>
+    <div class="slds-p-bottom_large slds-border_top slds-border_left slds-border_bottom slds-border_right">
+    <div class="slds-p-top_x-large slds-p-left_x-large slds-p-right_x-large">
+        All Objects
+    </div>
+
+<div class="slds-m-horizontal_xx-large slds-p-bottom-large slds-p-top-large">
+    <lightning:select name="objects" label="" aura:id="objectId"  onchange="{!c.onselect}">
+        <option text="Choose any one object"/>
+        <aura:iteration items="{!v.options}" var="option">
+            <option value="{!option}" text="{!option}" />
+        </aura:iteration>
+    </lightning:select></div>
+    </div>
+</aura:component>

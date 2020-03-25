@@ -1,0 +1,6 @@
+<apex:page standardController="Opportunity">
+    <apex:outputtext rendered="{!if(opportunity.stagename =='Prospecting',true,false) }" >prospecting</apex:outputtext>
+    <apex:outputtext rendered="{!if(opportunity.stagename =='Needs Analysis',true,false) }" >Needs Analysis</apex:outputtext>
+    <apex:outputtext rendered="{!if(opportunity.stagename =='Proposal/Price Quote',true,false) }" > Proposal/Price Quote</apex:outputtext>
+    <apex:outputtext rendered="{!if(opportunity.stagename =='Negotiation/Review stages',true,false) }" >Negotiation/Review stages</apex:outputtext>
+</apex:page>

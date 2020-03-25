@@ -1,0 +1,11 @@
+.THIS .slds-form-element__control > .slds-select_container > .slds-select{
+   min-height:27px;
+    min-width:100px;
+}
+.THIS .navbar-form >  .slds-form-element > .slds-form-element__label{
+  font-size:12px;
+}
+.THIS .navbar > .container-fluid > .mobile_navbar{
+    width:290px;
+    background-color:grey;
+}

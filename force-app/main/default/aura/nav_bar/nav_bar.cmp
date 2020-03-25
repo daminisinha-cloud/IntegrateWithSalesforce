@@ -1,0 +1,92 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <ltng:require styles="{!join(',', $Resource.bootstrap_css,$Resource.css_file)}"
+                  scripts="{!join(',', $Resource.latestjquery,$Resource.bootjs)}" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="collapse" type="String" default="collapse"/>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Board Anything</a>
+                
+                <form class="navbar-form navbar-left" >
+                    
+                    
+                    <lightning:select class="selectBoard "  name="Saved Boards" value="{!v.selectedBoard}" label="Saved Boards">
+                        <aura:iteration items="{!v.savedBoardsList}" var="board">
+                            <option text="{!board}"></option>
+                        </aura:iteration>
+                    </lightning:select>
+                    
+                    
+                </form>
+                
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" >
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                </button>
+            </div>
+            
+            <form class="form-group">
+                
+                <div class="collapse navbar-collapse " data-toggle="{!v.collapse}" id="myNavbar" data-target="#myNavbar">
+                   
+                    <!--<div class="mobile_navbar " style=" width: 300px; background-color: white;">-->
+                    <ul class="nav navbar-nav ">
+                        <li ><a href="#"><button class="btn btn-default navbar-btn"  title="Refresh">
+                            <lightning:icon iconName="utility:home" alternativeText="Home"/>
+                            <span class="slds-assistive-text">Home</span>
+                            </button>
+                            </a>
+                        </li>
+                        <li ><a href="#"><button class=" btn btn-default  navbar-btn "   title="Refresh">
+                            <lightning:icon iconName="utility:refresh" alternativeText="Refresh"  />
+                            <span class="slds-assistive-text">Refresh</span>
+                            </button>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right ">
+                        <li>
+                            <a href="#"><button class=" btn btn-default navbar-btn  "  title="Layout" onclick="{!c.ShowModuleBox}">
+                                <lightning:icon class="styleIcon" iconName="utility:layout" alternativeText="Layout"/>
+                                <span class="slds-assistive-text">Layout</span>
+                                </button>
+                            </a>
+                            
+                        </li>            
+                        <li>
+                            
+                            <a href="#"><button class=" btn btn-default navbar-btn "  title="New" onclick="{!c.newButtonsidebar}">
+                                <lightning:icon class="styleIcon" iconName="utility:add" alternativeText="Add" />
+                                <span class="slds-assistive-text">New</span>
+                                </button>
+                            </a>
+                            
+                        </li>
+                        <li>
+                            <a href="#"> <button class=" btn btn-default navbar-btn "  title="Edit" onclick="{!c.forDeleteBoardRecord}">
+                                <lightning:icon class="styleIcon" iconName="utility:edit" alternativeText="Edit"/>
+                                <span class="slds-assistive-text">Edit</span>
+                                </button>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"> <button class=" btn btn-default navbar-btn " title="Filter" onclick="{!c.fetchGroupingFields}">
+                                <lightning:icon class="styleIcon" iconName="utility:richtextoutdent" alternativeText="Filter" />
+                                <span class="slds-assistive-text">Filter</span>
+                                </button>
+                            </a>
+                            
+                        </li>
+                    </ul>
+                   <!-- </div>-->
+                </div>
+            </form>
+        </div>
+    </nav>
+    
+</aura:component>

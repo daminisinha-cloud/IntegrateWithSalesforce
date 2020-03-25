@@ -1,0 +1,57 @@
+<aura:component controller ="Campingmemberapex" >
+    <lightning:layout class="slds-page-header slds-theme_inverse">
+        <lightning:layoutItem>
+            <lightning:icon iconName="standard:search" alternativeText="SEARCH"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem>
+            <h1 class="slds-text-heading--medium"> Send Camping</h1> 
+        </lightning:layoutItem>
+        
+    </lightning:layout>
+    
+    <aura:attribute name="objectname" type="String"/>
+    <aura:attribute name="objectlist" type="list"/>
+    <aura:attribute name="recordtypelist" type="list"/>
+    
+    <aura:handler name="init"  value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:iteration items="{!v.objectlist}" var="item">
+        <div class="slds-size_1-of-2">
+        <div class="slds-badge ">{!item.keyset}</div>  
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer  ">
+            
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th scope="col">
+                        <div class="slds-truncate" title="Name">Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Phone">Phone</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Email">Email</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <aura:iteration items="{!item.value}" var="obj">
+                    <tr>
+                        <th>{!obj.Name}</th>
+                        <th>{!obj.Phone}</th>
+                        <th>{!obj.Email}</th>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+           <div class=" slds-align_absolute-center">
+               <div class="slds-size_1-of-2">
+        <c:customLookup objectAPIName="Campaign" IconName ="standard:opportunity"/>
+                   </div>
+                <div class="slds-size_1-of-2">
+               <lightning:button label="Send Campaing" onclick="{!c.sendemail}"/>
+               </div>
+        </div>
+    </aura:iteration>
+</aura:component>

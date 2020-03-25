@@ -1,0 +1,5 @@
+<aura:component >
+    <aura:method name="parentMethodInChild"/>
+	<aura:attribute name="parent" type="Aura.Component" required="true"/>
+    <lightning:button label="on click" onclick="{!c.onclick1}"/>
+</aura:component>

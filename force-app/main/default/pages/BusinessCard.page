@@ -1,0 +1,7 @@
+<apex:page >
+    {!$User.FirstName}
+   {!$User.LastName}
+   {!$User.Email}
+     {!$User.Phone}
+     {!$User.Title}
+</apex:page>

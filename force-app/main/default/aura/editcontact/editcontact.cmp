@@ -1,0 +1,13 @@
+<aura:component >
+    <aura:attribute name="recordId" type="String"/>
+     <aura:attribute name="fields" type="String[]"  default="['LastName', 'FirstName','Phone']"/>
+    <lightning:recordForm aura:id="edit account"
+                          recordId = "{!v.recordId}"	
+                          objectApiName="Contact"
+                          oncancel ="{!c.cancelrecord}"
+                          fields="{!v.fields}"
+                          mode="edit" 
+                          onsuccess="{!c.handleSuccess}"
+                          
+                          />
+</aura:component>

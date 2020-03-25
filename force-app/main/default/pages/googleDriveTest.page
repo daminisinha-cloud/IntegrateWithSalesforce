@@ -1,0 +1,7 @@
+<apex:page controller="googledriveIntegration">
+    <apex:form >
+    <apex:pageblock >
+        <apex:commandbutton value="authientate" action="{!DriveAuth}"/>
+        </apex:pageblock>
+    </apex:form>
+</apex:page>

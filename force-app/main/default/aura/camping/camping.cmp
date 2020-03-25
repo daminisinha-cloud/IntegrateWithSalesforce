@@ -1,0 +1,4 @@
+<aura:component >
+    <c:campinglist/>
+    <c:campingHeader/>
+</aura:component>
