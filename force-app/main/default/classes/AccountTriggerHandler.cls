@@ -6,7 +6,7 @@ public class AccountTriggerHandler {
               account_list.add(acc); 
              system.debug(acc.BillingState + 'shipping' +acc.ShippingState);
         }
-       System.debug('HEllo');
+       
         return account_list;
         
     }
