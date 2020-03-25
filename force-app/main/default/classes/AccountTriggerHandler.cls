@@ -4,7 +4,7 @@ public class AccountTriggerHandler {
         for(account acc :acc_list){
             acc.ShippingState = acc.BillingState;
               account_list.add(acc); 
-             system.debug(acc.BillingState + 'shipping' +acc.ShippingState);
+             system.debug(acc.BillingState + 'shipping12' +acc.ShippingState);
         }
        
         return account_list;
