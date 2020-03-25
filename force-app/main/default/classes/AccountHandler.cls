@@ -7,7 +7,7 @@ public static Account insertNewAccount(String name)
         return acct;
     }
     catch(DmlException e){
-    System.debug(e.getMessage()+'erroe');
+    System.debug(e.getMessage());
         return null;
       }
 }
