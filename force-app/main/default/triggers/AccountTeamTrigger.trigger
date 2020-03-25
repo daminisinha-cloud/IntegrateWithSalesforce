@@ -4,6 +4,7 @@ trigger AccountTeamTrigger on AccountTeam__c (after insert,after update,after de
         for(AccountTeam__c acc: Trigger.new){
             if(acc.Account__c!=null)
             accountid.add(acc.Account__c);
+            system.debug('tets');
         }
         AccountTeamTriggerHandler.OnOperation(accountid);
     }
