@@ -3,6 +3,7 @@ trigger AccountTeamTrigger on AccountTeam__c (after insert,after update,after de
     if(Trigger.IsAfter && Trigger.IsInsert){
         for(AccountTeam__c acc: Trigger.new){
             if(acc.Account__c!=null)
+            system.System.debug('test');
             accountid.add(acc.Account__c);
         }
         AccountTeamTriggerHandler.OnOperation(accountid);
