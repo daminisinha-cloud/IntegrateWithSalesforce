@@ -3,7 +3,7 @@ public static Account insertNewAccount(String name)
 {
     try{
         Account acct=new Account (Name=name);
-        system.debuf('tesr');
+        system.debuf('test');
         insert acct;
         return acct;
     }
