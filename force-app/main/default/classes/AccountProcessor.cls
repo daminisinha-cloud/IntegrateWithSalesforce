@@ -5,7 +5,7 @@ public class AccountProcessor {
        
       for(account acc: acc_list){
            list<contact> con_list =acc.contacts;
-
+system.debug();
             acc.Number_of_Contacts__c = con_list.size();
         }
           
