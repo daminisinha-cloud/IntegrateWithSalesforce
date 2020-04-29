@@ -2,7 +2,7 @@ public class AccountHandler {
 public static Account insertNewAccount(String name)
 {
     try{
-        Account acct=new Account (Name='utgy');
+        Account acct=new Account (Name=name);
         system.debug('');
         insert acct;
         return acct;
