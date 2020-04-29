@@ -15,7 +15,7 @@ private class AccountManagerTest{
         RestContext.request = request;
       
         Account thisAccount = AccountManager.getAccount();
-        
+
         System.assert(thisAccount!= null);
         System.assertEquals('test Account', thisAccount.Name);
     }
