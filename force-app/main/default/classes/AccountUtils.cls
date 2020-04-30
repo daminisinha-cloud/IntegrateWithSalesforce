@@ -3,6 +3,7 @@ public class AccountUtils {
       list<account>  acc = new list<account> (); 
         for(account a : [Select Id, name, billingstate from account where billingstate =:state])
            acc.add(a);
+        system.debug('dd');
         return acc;
     }
 
