@@ -5,6 +5,7 @@ trigger AccountTeamTrigger on AccountTeam__c (after insert,after update,after de
             if(acc.Account__c!=null)
             system.System.debug('test');
             accountid.add(acc.Account__c);
+            system.debug('1234');
         }
         AccountTeamTriggerHandler.OnOperation(accountid);
     }

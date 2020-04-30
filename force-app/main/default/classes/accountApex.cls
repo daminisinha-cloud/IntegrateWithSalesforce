@@ -18,6 +18,10 @@ public class accountApex {
     @AuraEnabled
     public static Contact deleteContact(Contact contact) {
         delete contact;
+<<<<<<< HEAD
+        
+=======
+>>>>>>> 658351f... commit
         return contact;
     }
     @AuraEnabled
