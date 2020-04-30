@@ -9,6 +9,7 @@ public class AccountTriggerTest {
         test.startTest();
       list<account> acc_list =  AccountTriggerHandler.CreateAccounts(acc);
         for(account acc1: acc_list){
+            system.debug('ddd');
              System.assertEquals('CA', acc1.ShippingState);  
         }
      
