@@ -16,6 +16,7 @@ public class accountApex {
     }
     @AuraEnabled
     public static Contact deleteContact(Contact contact) {
+        system.debug('dds');
         delete contact;
         return contact;
     }
