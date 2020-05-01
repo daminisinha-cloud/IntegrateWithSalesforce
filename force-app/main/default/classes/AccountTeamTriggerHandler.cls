@@ -15,7 +15,7 @@ public class AccountTeamTriggerHandler {
 }else{
 opp_list.add(new opportunity(id = opp.Id,StarAccount__c=false));
 }
-        }update opp_list;
+        }update opp_list;system.debug('ddd');
     /*    map<ID,Integer> m = new map<ID,Integer>();
         map<ID,Account> acc_map = new map<ID,Account>();
         for(AccountTeam__c acc:[Select account__c from AccountTeam__c where account__c In:accountid]){

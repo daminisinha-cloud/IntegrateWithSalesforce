@@ -16,7 +16,7 @@ global class Accountbatch implements database.Batchable<sObject>{
     global void execute(Database.BatchableContext bc, list<account> records){
        list<account> acc_list = new list<account>();
         for(account acc: records){
-            if(acc.AnnualRevenue<1000)
+            if(acc.AnnualRevenue<100)
                 acc.Amount_status__c = label.accountaverageamount;
             else if(acc.AnnualRevenue>=50000)
                 acc.Amount_status__c = label.accounthighamount ;
@@ -28,7 +28,7 @@ global class Accountbatch implements database.Batchable<sObject>{
         update  acc_list;
     }
     global void finish(Database.BatchableContext bc){
-        
+        system.debug();
     }
     
 }

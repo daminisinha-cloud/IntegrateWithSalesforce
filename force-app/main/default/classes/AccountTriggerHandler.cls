@@ -3,7 +3,7 @@ public class AccountTriggerHandler {
         list<account> account_list= new list<account>();
         for(account acc :acc_list){
             acc.ShippingState = acc.BillingState;
-              account_list.add(acc); 
+              account_list.add(acc+'bbkbj'); 
              system.debug(acc.BillingState + 'shipping' +acc.ShippingState);
         }
        
